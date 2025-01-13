@@ -4,6 +4,7 @@ resource "yandex_compute_instance" "platform2" {
     "1" = "replica"
   }
   name        = "${var.each_vm[each.key]["vm_name"]}${each.value}"
+  hostname    = "${var.each_vm[each.key]["vm_name"]}${each.value}"
   platform_id = var.platform_id.pi1
   resources {
     cores         = "${var.each_vm[each.key]["cpu"]}"
@@ -16,8 +17,9 @@ resource "yandex_compute_instance" "platform2" {
       size   = "${var.each_vm[each.key]["disk_volume"]}"
     }
   }
+
   scheduling_policy {
-    preemptible = true
+    preemptible = var.preemptible.yes
   }
 
   network_interface {
@@ -27,5 +29,5 @@ resource "yandex_compute_instance" "platform2" {
 
   metadata = local.metadata
 
-  allow_stopping_for_update = true
+  allow_stopping_for_update = var.stop_vm.yes
 }

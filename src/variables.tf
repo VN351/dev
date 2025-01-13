@@ -32,12 +32,6 @@ variable "vpc_name" {
   description = "VPC network&subnet name"
 }
 
-variable "vms_ssh_root_key" {
-  description = "Путь к публичному SSH ключу"
-  type        = string
-  default     = "/home/vlad/.ssh/id_ed25519.pub"
-}
-
 variable "vm_os_family" {
   type        = string
   default     = "ubuntu-2004-lts"
@@ -63,6 +57,30 @@ variable "nat" {
   }
 }
 
+variable "preemptible" {
+  description = "Прерываемая VM"
+  type = map(string)
+  default = {
+    "yes" = "true"
+    "no"  = "false" 
+  }
+}
+
+variable "stop_vm" {
+  description = "Остановка VM для принятия изменений"
+  type = map(string)
+  default = {
+    "yes" = "true"
+    "no"  = "false" 
+  }
+}
+
+variable "vms_ssh_root_key" {
+  description = "Путь к публичному SSH ключу"
+  type        = string
+  default     = "/home/vlad/.ssh/id_ed25519.pub"
+}
+
 variable "ssh_username" {
   description = "Имя пользователя для SSH ключей"
   type        = string
@@ -71,18 +89,11 @@ variable "ssh_username" {
 
 variable "vms_resurces" {
   description = "Ресурсы VM web"
-  type        = map(map(number))
+  type        = map(number)
   default = {
-    vm_web_resources = {
-      core = 2
-      memory = 1
-      core_fraction = 5
-    }
-    vm_db_resources = {
-      core = 2
-      memory = 2
-      core_fraction = 20  
-    }
+    core           = 2
+    memory         = 1
+    core_fraction  = 5
   }
 }
 
@@ -96,14 +107,14 @@ variable "each_vm" {
     disk_volume = number
   }))
   default     = [{
-    vm_name = ""
+    vm_name = "db"
     cpu = 2
     ram = 2
     core_fraction = 20
     disk_volume = 10
   },
   {
-    vm_name = ""
+    vm_name = "db"
     cpu = 2
     ram = 1
     core_fraction = 5
