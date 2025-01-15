@@ -3,9 +3,9 @@ resource "local_file" "inventory" {
 
   content = templatefile("${path.module}/host.tftpl",
     {
-      webservers  = yandex_compute_instance.web,
-      databases   = yandex_compute_instance.platform2,
-      storage     = yandex_compute_instance.storage
+      webservers = yandex_compute_instance.web,
+      databases  = yandex_compute_instance.platform2,
+      storage    = [yandex_compute_instance.storage]
     }
   )
 }

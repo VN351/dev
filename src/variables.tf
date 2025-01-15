@@ -107,14 +107,14 @@ variable "each_vm" {
     disk_volume = number
   }))
   default     = [{
-    vm_name = "db"
+    vm_name = "db-"
     cpu = 2
     ram = 2
     core_fraction = 20
     disk_volume = 10
   },
   {
-    vm_name = "db"
+    vm_name = "db-"
     cpu = 2
     ram = 1
     core_fraction = 5
